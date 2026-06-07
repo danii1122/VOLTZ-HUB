@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VoltzHub — Admin Access</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Inter:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#1a3fb5;--red2:#1533a0;--red-light:#eef2ff;
+  --dark:#111;--text:#222;--muted:#4b5563;
+  --bg:#f1f3f9;--bg2:#fff;--border:#d1d5db;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  padding:1rem;
+}
+
+/* animated background */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(26,63,181,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 80%, rgba(26,63,181,0.06) 0%, transparent 60%);
+  pointer-events:none;
+  z-index:0;
+}
+
+.card{
+  position:relative;z-index:1;
+  background:var(--bg2);
+  border:1.5px solid var(--border);
+  border-radius:20px;
+  padding:2.5rem 2.2rem 2rem;
+  width:100%;max-width:400px;
+  box-shadow:0 8px 40px rgba(26,63,181,0.10),0 2px 8px rgba(0,0,0,0.06);
+  animation:fadeUp .45s cubic-bezier(.22,.68,0,1.2) both;
+}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(24px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+.logo{
+  display:flex;align-items:center;gap:8px;
+  font-family:'Inter',sans-serif;font-size:1.2rem;font-weight:900;
+  letter-spacing:1.5px;color:var(--red);
+  margin-bottom:1.8rem;
+  justify-content:center;
+}
+.logo-bolt{
+  width:32px;height:32px;
+  background:linear-gradient(135deg,#1a3fb5,#3b5ef5);
+  border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;
+  box-shadow:0 2px 8px rgba(26,63,181,0.25);
+}
+
+h1{
+  font-family:'DM Serif Display',serif;
+  font-size:1.55rem;color:var(--dark);
+  text-align:center;margin-bottom:.4rem;
+}
+.sub{
+  text-align:center;color:var(--muted);
+  font-size:.88rem;margin-bottom:1.8rem;
+}
+
+.field{position:relative;margin-bottom:1.1rem;}
+.field label{
+  display:block;font-size:.78rem;font-weight:600;
+  color:var(--muted);margin-bottom:.45rem;letter-spacing:.4px;text-transform:uppercase;
+}
+.field input{
+  width:100%;padding:.78rem 2.8rem .78rem 1rem;
+  border:1.5px solid var(--border);border-radius:10px;
+  font-family:'DM Sans',sans-serif;font-size:.95rem;
+  color:var(--dark);background:#fff;
+  outline:none;transition:border-color .2s,box-shadow .2s;
+}
+.field input:focus{
+  border-color:var(--red);
+  box-shadow:0 0 0 3px rgba(26,63,181,0.10);
+}
+.field input.error{
+  border-color:#ef4444;
+  box-shadow:0 0 0 3px rgba(239,68,68,0.10);
+  animation:shake .35s ease;
+}
+@keyframes shake{
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-6px)}
+  40%{transform:translateX(6px)}
+  60%{transform:translateX(-4px)}
+  80%{transform:translateX(4px)}
+}
+
+.toggle-pw{
+  position:absolute;right:.85rem;bottom:.78rem;
+  background:none;border:none;cursor:pointer;
+  color:var(--muted);font-size:1rem;padding:0;
+  line-height:1;
+}
+.toggle-pw:hover{color:var(--red);}
+
+.err-msg{
+  display:none;
+  color:#ef4444;font-size:.82rem;
+  margin-top:.4rem;margin-bottom:.2rem;
+}
+.err-msg.show{display:block;}
+
+.btn{
+  width:100%;padding:.82rem;
+  background:var(--red);color:#fff;
+  border:none;border-radius:10px;
+  font-family:'DM Sans',sans-serif;font-size:.97rem;font-weight:600;
+  cursor:pointer;transition:background .18s,transform .15s,box-shadow .18s;
+  box-shadow:0 4px 14px rgba(26,63,181,0.25);
+  margin-top:.4rem;
+}
+.btn:hover{background:var(--red2);transform:translateY(-1px);box-shadow:0 6px 18px rgba(26,63,181,0.30);}
+.btn:active{transform:translateY(0);}
+.btn:disabled{background:#93a8e8;cursor:not-allowed;transform:none;box-shadow:none;}
+
+.attempts{
+  text-align:center;font-size:.78rem;color:var(--muted);
+  margin-top:1rem;
+}
+.attempts span{color:var(--red);font-weight:600;}
+
+.locked{
+  display:none;text-align:center;padding:1rem 0;
+}
+.locked-icon{font-size:2.5rem;margin-bottom:.7rem;}
+.locked h2{font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--dark);margin-bottom:.4rem;}
+.locked p{color:var(--muted);font-size:.88rem;}
+.countdown{font-weight:700;color:var(--red);}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="logo">
+    <div class="logo-bolt">⚡</div>
+    VOLTZHUB
+  </div>
+
+  <div id="login-form">
+    <h1>Admin Portal</h1>
+    <p class="sub">Enter your password to continue</p>
+
+    <div class="field">
+      <label>Password</label>
+      <input type="password" id="pw-input" placeholder="Enter password" autocomplete="current-password">
+      <button class="toggle-pw" type="button" id="toggle-btn" tabindex="-1">👁</button>
+    </div>
+    <div class="err-msg" id="err-msg">Incorrect password. Please try again.</div>
+
+    <button class="btn" id="login-btn">Access Admin Portal →</button>
+    <div class="attempts">Attempts remaining: <span id="attempts-left">5</span></div>
+  </div>
+
+  <div class="locked" id="locked-screen">
+    <div class="locked-icon">🔒</div>
+    <h2>Access Locked</h2>
+    <p>Too many failed attempts.<br>Try again in <span class="countdown" id="countdown">30</span> seconds.</p>
+  </div>
+</div>
+
+<script>
+  // ── CONFIG: change this password ──
+  var ADMIN_PASSWORD = 'voltzhub2024';
+  var MAX_ATTEMPTS = 5;
+  var LOCKOUT_SECONDS = 30;
+  // ──────────────────────────────────
+
+  var attempts = MAX_ATTEMPTS;
+  var locked = false;
+  var lockTimer = null;
+
+  var input = document.getElementById('pw-input');
+  var btn = document.getElementById('login-btn');
+  var errMsg = document.getElementById('err-msg');
+  var attemptsLeft = document.getElementById('attempts-left');
+  var toggleBtn = document.getElementById('toggle-btn');
+  var loginForm = document.getElementById('login-form');
+  var lockedScreen = document.getElementById('locked-screen');
+  var countdownEl = document.getElementById('countdown');
+
+  // Show/hide password
+  toggleBtn.addEventListener('click', function(){
+    if(input.type === 'password'){
+      input.type = 'text';
+      toggleBtn.textContent = '🙈';
+    } else {
+      input.type = 'password';
+      toggleBtn.textContent = '👁';
+    }
+  });
+
+  // Enter key
+  input.addEventListener('keydown', function(e){
+    if(e.key === 'Enter') tryLogin();
+  });
+
+  btn.addEventListener('click', tryLogin);
+
+  function tryLogin(){
+    if(locked) return;
+    var val = input.value;
+    if(!val){ shake(); return; }
+
+    if(val === ADMIN_PASSWORD){
+      btn.textContent = 'Unlocking…';
+      btn.disabled = true;
+      setTimeout(function(){
+        sessionStorage.setItem('voltz_auth','granted');
+        window.location.href = 'admin.html';
+      }, 400);
+    } else {
+      attempts--;
+      attemptsLeft.textContent = attempts;
+      shake();
+      errMsg.classList.add('show');
+      input.value = '';
+      input.focus();
+
+      if(attempts <= 0){
+        startLockout();
+      }
+    }
+  }
+
+  function shake(){
+    input.classList.remove('error');
+    void input.offsetWidth; // reflow
+    input.classList.add('error');
+    setTimeout(function(){ input.classList.remove('error'); }, 400);
+  }
+
+  function startLockout(){
+    locked = true;
+    loginForm.style.display = 'none';
+    lockedScreen.style.display = 'block';
+    var secs = LOCKOUT_SECONDS;
+    countdownEl.textContent = secs;
+    lockTimer = setInterval(function(){
+      secs--;
+      countdownEl.textContent = secs;
+      if(secs <= 0){
+        clearInterval(lockTimer);
+        locked = false;
+        attempts = MAX_ATTEMPTS;
+        attemptsLeft.textContent = attempts;
+        errMsg.classList.remove('show');
+        loginForm.style.display = 'block';
+        lockedScreen.style.display = 'none';
+        input.focus();
+      }
+    }, 1000);
+  }
+
+  input.focus();
+</script>
+</body>
+</html>

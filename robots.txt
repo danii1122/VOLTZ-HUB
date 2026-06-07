@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Block pages with no SEO value
+Disallow: /cart
+Disallow: /admin
+Disallow: /gate
+
+# Sitemap location
+Sitemap: https://voltzhub.pk/sitemap.xml
