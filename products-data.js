@@ -1,5 +1,5 @@
 // VoltzHub Products Database
-// Generated: 3/25/2026, 12:30:47 AM
+// Generated: 6/8/2026, 8:11:33 PM
 // Drop this file in your site folder alongside all HTML files.
 // All pages (home, shop, product, cart) will update automatically.
 
@@ -78,7 +78,7 @@ window.VOLTZ_PRODUCTS = [
 ];
 
 // Trending section IDs — controls the homepage "🔥 Trending Products" grid
-window.VOLTZ_TRENDING = [22,34,49,40,55,8,33,14,65];
+window.VOLTZ_TRENDING = [22,34,49,40,55,8,33,14,65,1];
 
 // Hot badge IDs — products that show the 🔥 HOT badge
 window.VOLTZ_HOT = [17,40,22,34,9,14,55,65,1];
