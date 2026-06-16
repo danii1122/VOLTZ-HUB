@@ -1,5 +1,5 @@
 // VoltzHub Products Database
-// Generated: 3/25/2026, 12:30:47 AM
+// Generated: 6/8/2026, 8:17:13 PM
 // Drop this file in your site folder alongside all HTML files.
 // All pages (home, shop, product, cart) will update automatically.
 
@@ -78,10 +78,10 @@ window.VOLTZ_PRODUCTS = [
 ];
 
 // Trending section IDs — controls the homepage "🔥 Trending Products" grid
-window.VOLTZ_TRENDING = [22,34,49,40,55,8,33,14,65];
+window.VOLTZ_TRENDING = [22,34,49,40,55,8,33,14,65,1];
 
 // Hot badge IDs — products that show the 🔥 HOT badge
-window.VOLTZ_HOT = [17,40,22,34,9,14,55,65,1];
+window.VOLTZ_HOT = [17,40,22,34,9,14,55,65,1,2];
 
 // Categories
 window.VOLTZ_CATEGORIES = [{"name":"AI Tools","e":"🤖","desc":"AI-powered tools","bg":"#fde8e8"},{"name":"Games","e":"🎮","desc":"Game keys & accounts","bg":"#fff3e6"},{"name":"Software","e":"💻","desc":"Software licenses","bg":"#e8f0fd"},{"name":"Subscriptions","e":"📺","desc":"Streaming & services","bg":"#e8fdf0"},{"name":"Game Credits","e":"🎯","desc":"In-game currency","bg":"#fff3e6"},{"name":"VPN","e":"🔐","desc":"Secure browsing","bg":"#e8f0fd"},{"name":"Antivirus","e":"🛡️","desc":"Security software","bg":"#eef2ff"},{"name":"Music","e":"🎧","desc":"Music streaming","bg":"#fdf4ff"},{"name":"Learning","e":"🎓","desc":"Online courses","bg":"#fffbeb"},{"name":"Social Media","e":"🖥️","bg":"#e8f0fd","desc":"Serices"}];
